@@ -12,8 +12,8 @@ test -e "$1" || ( echo "'$1' does not exist" ; exit 1 ; )
 test -d "$1" || ( echo "'$1' is not a directory" ; exit 1 ; )
 
 matches=$(grep -r "$2" $1)
+files=$(find "$filesdir" -type f | wc -l)
 lines=$(echo "$matches" | wc -l)
-files=$(echo "$matches" | cut -d ':' -f 1 | uniq | wc -l)
 
 echo "The number of files are $files and the number of matching lines are $lines"
 
