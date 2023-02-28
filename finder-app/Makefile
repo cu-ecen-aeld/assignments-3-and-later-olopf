@@ -9,4 +9,4 @@ build-writer:
 	${gcc} finder-app/writer.c -o finder-app/writer
 
 clean:
-	rm finder-app/writer
+	rm finder-app/writer || true
