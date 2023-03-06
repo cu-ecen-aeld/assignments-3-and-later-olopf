@@ -1,5 +1,6 @@
 #include "systemcalls.h"
 #include <fcntl.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>
@@ -56,7 +57,7 @@ bool do_exec(int count, ...) {
     printf("Executing %s\n", command[0]);
     status = execv(command[0], command);
     perror("Failed to execute command");
-    result = false;
+    exit(-1);
   } else {
     printf("Forked process with pid %d\n", pid);
     if (waitpid(pid, &status, 0) == -1) {
@@ -114,7 +115,7 @@ bool do_exec_redirect(const char *outputfile, int count, ...) {
       status = execv(command[0], command);
       perror("Failed to execute command");
     }
-    result = false;
+    exit(-1);
   } else if (pid > 0) {
     printf("Forked process with pid %d\n", pid);
     if (waitpid(pid, &status, 0) == -1) {
