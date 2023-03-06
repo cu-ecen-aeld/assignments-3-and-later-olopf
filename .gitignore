@@ -6,6 +6,7 @@ crosstool-ng
 aesd-build
 .vscode/
 test.sh.log
+testfile.txt
 actions-runner
 Vagrantfile
 .vagrant
