@@ -12,8 +12,8 @@ BUSYBOX_VERSION=1_33_1
 SRCDIR=$(realpath "$(dirname $0)/..")
 ARCH=arm64
 CROSS_COMPILE=aarch64-none-linux-gnu-
-compiler_path=$(dirname $(which ${CROSS_COMPILE}gcc))
-SYSROOT=$(realpath "${compiler_path}/../aarch64-none-linux-gnu/")
+SYSROOT=$(realpath "$(${CROSS_COMPILE}gcc -print-sysroot)")
+CORES=$(grep -c ^processor /proc/cpuinfo)
 
 echo_header () {
   echo "
@@ -57,7 +57,7 @@ if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
   echo_sub_header "Generating defconfig"
   make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE defconfig
   echo_sub_header "Building vmlinux image"
-  make ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE all
+  make -j${CORES} ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE all
 fi
 
 echo_sub_header "Adding the Image in outdir"
@@ -90,7 +90,7 @@ fi
 
 make distclean
 make defconfig
-make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE}
+make -j${CORES} ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE}
 make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} CONFIG_PREFIX=${OUTDIR}/rootfs install
 
 echo "Library dependencies"
