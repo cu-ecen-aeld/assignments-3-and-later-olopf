@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 HELP="finder.sh DIRECTORY NAME"
 
