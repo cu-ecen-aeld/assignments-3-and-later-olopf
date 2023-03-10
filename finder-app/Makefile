@@ -1,6 +1,10 @@
+all: writer
 
-build-writer:
-	${CROSS_COMPILE}gcc ${CFLAGS} writer.c -o writer
+writer.o: writer.c
+	${CC} ${CFLAGS} -c writer.c
+
+writer: writer.o
+	${CC} ${CFLAGS} ${LDFLAGS} writer.o -o writer.c
 
 clean:
-	rm writer || true
+	rm writer writer.o || true
