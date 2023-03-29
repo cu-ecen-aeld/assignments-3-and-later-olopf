@@ -1,4 +1,5 @@
 *.o
+*.gch
 writer
 Test_*_Runner.c
 build/
